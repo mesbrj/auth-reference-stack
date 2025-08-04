@@ -1,0 +1,172 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database - Shared by all Ory services
+  postgres:
+    image: postgres:15-alpine
+    container_name: ory-postgres
+    environment:
+      POSTGRES_DB: ory
+      POSTGRES_USER: ory
+      POSTGRES_PASSWORD: secret
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./scripts/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    networks:
+      - ory-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ory -d ory"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Ory Hydra - OAuth 2.0 and OpenID Connect Provider
+  hydra:
+    image: oryd/hydra:v2.2.0
+    container_name: ory-hydra
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DSN: postgres://ory:secret@postgres:5432/hydra?sslmode=disable&max_conns=20&max_idle_conns=4
+      URLS_SELF_ISSUER: http://localhost:4444
+      URLS_CONSENT: http://localhost:3000/consent
+      URLS_LOGIN: http://localhost:3000/login
+      URLS_LOGOUT: http://localhost:3000/logout
+      SECRETS_SYSTEM: youReallyNeedToChangeThis
+      OIDC_SUBJECT_IDENTIFIERS_SUPPORTED_TYPES: pairwise,public
+      OIDC_SUBJECT_IDENTIFIERS_PAIRWISE_SALT: youReallyNeedToChangeThis
+      LOG_LEVEL: debug
+      LOG_FORMAT: json
+    ports:
+      - "4444:4444" # Public port
+      - "4445:4445" # Admin port
+    command: serve all --dev
+    volumes:
+      - ./configs/hydra:/etc/config/hydra
+    networks:
+      - ory-network
+    healthcheck:
+      test: ["CMD", "hydra", "version"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Ory Kratos - Identity and User Management
+  kratos:
+    image: oryd/kratos:v1.1.0
+    container_name: ory-kratos
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DSN: postgres://ory:secret@postgres:5432/kratos?sslmode=disable&max_conns=20&max_idle_conns=4
+      LOG_LEVEL: debug
+      LOG_FORMAT: json
+    ports:
+      - "4433:4433" # Public port
+      - "4434:4434" # Admin port
+    volumes:
+      - ./configs/kratos:/etc/config/kratos
+    command: serve -c /etc/config/kratos/kratos.yml --dev --watch-courier
+    networks:
+      - ory-network
+    healthcheck:
+      test: ["CMD", "kratos", "version"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Ory Keto - Authorization Server
+  keto:
+    image: oryd/keto:v0.12.0
+    container_name: ory-keto
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DSN: postgres://ory:secret@postgres:5432/keto?sslmode=disable&max_conns=20&max_idle_conns=4
+      LOG_LEVEL: debug
+      LOG_FORMAT: json
+    ports:
+      - "4466:4466" # Read API
+      - "4467:4467" # Write API
+    volumes:
+      - ./configs/keto:/etc/config/keto
+    command: serve --config /etc/config/keto/keto.yml
+    networks:
+      - ory-network
+    healthcheck:
+      test: ["CMD", "keto", "version"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Ory Kratos Self-Service UI (optional demo)
+  kratos-selfservice-ui-node:
+    image: oryd/kratos-selfservice-ui-node:v1.1.0
+    container_name: ory-ui
+    depends_on:
+      - kratos
+    environment:
+      KRATOS_PUBLIC_URL: http://kratos:4433/
+      KRATOS_BROWSER_URL: http://localhost:4433/
+      PORT: 3000
+      SECURITY_MODE: cookie
+    ports:
+      - "3000:3000"
+    networks:
+      - ory-network
+
+  # API Gateway (APISIX)
+  apisix:
+    image: apache/apisix:3.8.0-debian
+    container_name: ory-apisix
+    depends_on:
+      - etcd
+      - hydra
+      - kratos
+      - keto
+    ports:
+      - "9080:9080" # HTTP
+      - "9443:9443" # HTTPS
+      - "9091:9091" # Admin API
+    volumes:
+      - ./configs/apisix/apisix.yaml:/usr/local/apisix/conf/apisix.yaml:ro
+      - ./configs/apisix/config.yaml:/usr/local/apisix/conf/config.yaml:ro
+    networks:
+      - ory-network
+
+  # ETCD for APISIX
+  etcd:
+    image: bitnami/etcd:3.5.10
+    container_name: ory-etcd
+    environment:
+      ETCD_ENABLE_V2: "true"
+      ALLOW_NONE_AUTHENTICATION: "yes"
+      ETCD_ADVERTISE_CLIENT_URLS: "http://etcd:2379"
+      ETCD_LISTEN_CLIENT_URLS: "http://0.0.0.0:2379"
+    ports:
+      - "2379:2379"
+      - "2380:2380"
+    networks:
+      - ory-network
+
+  # Example Backend Service
+  demo-service:
+    image: nginx:alpine
+    container_name: demo-service
+    ports:
+      - "8080:80"
+    volumes:
+      - ./demo/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./demo/index.html:/usr/share/nginx/html/index.html:ro
+    networks:
+      - ory-network
+
+volumes:
+  postgres_data:
+
+networks:
+  ory-network:
+    driver: bridge

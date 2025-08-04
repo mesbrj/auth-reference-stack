@@ -1,0 +1,16 @@
+{
+    "yaml.schemas": {
+        "file:///dev/null": [
+            "**/configs/kratos/*.yml",
+            "**/configs/hydra/*.yml", 
+            "**/configs/keto/*.yml"
+        ]
+    },
+    "yaml.validate": false,
+    "files.associations": {
+        "**/configs/**/*.yml": "yaml",
+        "**/configs/**/*.yaml": "yaml"
+    },
+    "json.validate": true,
+    "json.format.enable": true
+}

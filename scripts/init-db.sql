@@ -1,0 +1,9 @@
+-- Initialize databases for all Ory services
+CREATE DATABASE IF NOT EXISTS hydra;
+CREATE DATABASE IF NOT EXISTS kratos;
+CREATE DATABASE IF NOT EXISTS keto;
+
+-- Grant permissions
+GRANT ALL PRIVILEGES ON DATABASE hydra TO ory;
+GRANT ALL PRIVILEGES ON DATABASE kratos TO ory;
+GRANT ALL PRIVILEGES ON DATABASE keto TO ory;

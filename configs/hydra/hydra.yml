@@ -1,0 +1,71 @@
+version: v2.2.0
+
+dsn: postgres://auth:secret@postgres:5432/hydra?sslmode=disable
+
+serve:
+  public:
+    base_url: http://127.0.0.1:4444/
+    cors:
+      enabled: true
+      allowed_origins:
+        - "*"
+      allowed_methods:
+        - POST
+        - GET
+        - PUT
+        - PATCH
+        - DELETE
+      allowed_headers:
+        - "*"
+  admin:
+    base_url: http://hydra:4445/
+  tls:
+    allow_termination_from:
+      - 127.0.0.1/32
+
+urls:
+  self:
+    issuer: http://127.0.0.1:4444/
+  consent: http://127.0.0.1:4455/consent
+  login: http://127.0.0.1:4455/login
+  logout: http://127.0.0.1:4455/logout
+  error: http://127.0.0.1:4455/error
+  post_logout_redirect: http://127.0.0.1:4455/
+
+strategies:
+  access_token: jwt
+  scope: exact
+
+ttl:
+  login_request: 1h
+  consent_request: 1h
+  access_token: 1h
+  refresh_token: 720h
+  id_token: 1h
+  auth_code: 10m
+
+oauth2:
+  exposition_of_authorization_code_to_client: false
+  pkce:
+    enforced: false
+    enforced_for_public_clients: true
+  grant_types_supported:
+    - authorization_code
+    - refresh_token
+    - client_credentials
+    - password
+
+secrets:
+  system:
+    - youReallyNeedToChangeThis
+
+log:
+  level: debug
+  format: json
+
+oidc:
+  subject_identifiers:
+    supported_types:
+      - public
+    public:
+      salt: youReallyNeedToChangeThis

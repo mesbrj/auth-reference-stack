@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ory Stack Demo</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            max-width: 800px; 
+            margin: 50px auto; 
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .container { 
+            background: rgba(255,255,255,0.1); 
+            padding: 30px; 
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        h1 { color: #fff; text-align: center; }
+        .status { 
+            background: rgba(255,255,255,0.2); 
+            padding: 15px; 
+            border-radius: 5px; 
+            margin: 10px 0;
+        }
+        .services { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+        .service {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .service h3 { margin-top: 0; color: #ffd700; }
+        a { color: #87ceeb; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔐 Ory Authentication Stack</h1>
+        
+        <div class="status">
+            <h2>✅ Demo Service Running</h2>
+            <p>This is a protected backend service behind the Ory authentication stack.</p>
+        </div>
+
+        <div class="services">
+            <div class="service">
+                <h3>🔑 Kratos</h3>
+                <p>Identity Management</p>
+                <a href="http://localhost:3000" target="_blank">Self-Service UI</a><br>
+                <a href="http://localhost:4433/.well-known/ory/kratos/public/self-service/browser/flows/registration/api" target="_blank">Registration API</a>
+            </div>
+
+            <div class="service">
+                <h3>🎯 Hydra</h3>
+                <p>OAuth 2.0 / OIDC</p>
+                <a href="http://localhost:4444/.well-known/openid_configuration" target="_blank">OpenID Config</a><br>
+                <a href="http://localhost:4444/oauth2/auth" target="_blank">Authorization</a>
+            </div>
+
+            <div class="service">
+                <h3>🛡️ Keto</h3>
+                <p>Authorization Server</p>
+                <a href="http://localhost:4466/health/ready" target="_blank">Health Check</a><br>
+                <a href="http://localhost:4467/relation-tuples" target="_blank">Relations API</a>
+            </div>
+
+            <div class="service">
+                <h3>🚪 APISIX</h3>
+                <p>API Gateway</p>
+                <a href="http://localhost:9080/public/health" target="_blank">Public API</a><br>
+                <a href="http://localhost:9080/api/v1/protected" target="_blank">Protected API</a>
+            </div>
+        </div>
+
+        <div class="status">
+            <h3>🚀 Quick Start</h3>
+            <ol>
+                <li>Visit <a href="http://localhost:3000" target="_blank">http://localhost:3000</a> to register/login</li>
+                <li>Get OAuth tokens from <a href="http://localhost:4444" target="_blank">Hydra</a></li>
+                <li>Access protected APIs via <a href="http://localhost:9080" target="_blank">APISIX Gateway</a></li>
+            </ol>
+        </div>
+    </div>
+</body>
+</html>

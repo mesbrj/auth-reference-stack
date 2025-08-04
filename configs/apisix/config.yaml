@@ -1,0 +1,15 @@
+apisix:
+  node_listen: 9080
+  enable_ipv6: false
+  
+  router:
+    http: 'radixtree_uri'
+    ssl: 'radixtree_sni'
+
+etcd:
+  host:
+    - "http://etcd:2379"
+  prefix: "/apisix"
+  timeout: 30
+
+#END

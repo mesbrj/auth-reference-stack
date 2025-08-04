@@ -1,0 +1,29 @@
+version: v0.11.1
+
+dsn: postgres://auth:secret@postgres:5432/keto?sslmode=disable
+
+serve:
+  read:
+    host: 0.0.0.0
+    port: 4466
+  write:
+    host: 0.0.0.0
+    port: 4467
+
+log:
+  level: debug
+
+namespaces:
+  - name: files
+    id: 1
+  - name: users
+    id: 2
+  - name: groups
+    id: 3
+  - name: roles
+    id: 4
+  - name: permissions
+    id: 5
+
+# Example relationships for Kerberos-based authorization
+# These would be populated based on Kerberos realm and group information
