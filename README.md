@@ -86,7 +86,7 @@ Positivive points about Kerberos:
 
 - **Service Session key** - Each client/server connection has its own session key, providing per-connection security (each Kerberos client connected to a MariaDB has its own session key, for example).
 - **Mutual Authentication** - Both client and server verify each other's identity.
-- **KDC Centralization** - In a Kerberos service/protocol/realm, only KDC servers have TCP listening ports (for Kerberos). When the client from a file-server or DB "kerberized" has aquired a service-ticket from a KDC using his valid TGT (to access the file-server or DB), the service-ticket is used in the authentication process\step from a given service\protocol (file-share or DB connection, for example).
+- **KDC Centralization** - In a Kerberos service/protocol/realm, only KDC servers have TCP/UDP listening ports (for Kerberos). When the client from a file-server or DB "kerberized" has aquired a service-ticket from a KDC using his valid TGT (to access the file-server or DB), the service-ticket is used in the authentication process\step from a given service\protocol (file-share or DB connection, for example).
 - **Cross-Platform Support** - Widely supported across various operating systems and applications.
 - **Strong Security** - Encrypted tickets and time-limited credentials.
 - **Single Sign-On** - Principals authenticate once and gain access to multiple services without re-entering credentials.
