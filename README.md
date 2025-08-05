@@ -60,6 +60,7 @@ The [kerby](https://directory.apache.org/kerby/) project provides a complete Ker
 #### Ways to explore, test and develop the Kerby realm usage:
 
 - Kafka with SASL/GSSAPI authentication
+- [wildfly](https://wildfly.org/) Java GSS-API [Jakarta EE](https://jakarta.ee/learn/docs/jakartaee-tutorial/current/security/security-intro/security-intro.html) web service with Kerberos SSO.
 
 #### Ways to explore, test and develop the Kerby and Ory integration:
 
