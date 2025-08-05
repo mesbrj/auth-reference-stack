@@ -79,7 +79,7 @@ The [kerby](https://directory.apache.org/kerby/) project provides a complete Ker
 
 *Kerberos observations*
 
-- Kerby *"complete implementation"* (with/without Ory ?) are able to trying a **Realm-as-a-Service** model ? One KDC for multiple tenants or one KDC per tenant ?
+- Kerby *"complete implementation"* (with/without Ory ?) are able to trying a **Realm-as-a-Service** model ?
 
 Positivive points about Kerberos:
 
