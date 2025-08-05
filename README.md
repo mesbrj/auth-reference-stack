@@ -47,6 +47,7 @@ A modern, production-ready authentication and authorization reference architectu
 ### Enterprise Kerberos Authentication integration with [**kerby**](https://directory.apache.org/kerby/)
 
 The Ory ecosystem (with [Polis](https://www.ory.sh/polis)) is unaware of anything beyond [SAML](https://en.wikipedia.org/wiki/Security_Assertion_Markup_Language).
+
 [SASL](https://en.wikipedia.org/wiki/Simple_Authentication_and_Security_Layer), [GSSAPI](https://en.wikipedia.org/wiki/GSSAPI), [SPNEGO](https://en.wikipedia.org/wiki/SPNEGO) are completely alien technologies.
 
 Kerberos is extremely used in Enterprise environments and products like: **Kafka**, **PostgreSQL**, **mariaDB**, **Hadoop(HDFS/YARN)**, **ElasticSearch** (to name a few), has at least GSSAPI or SPNEGO support.
@@ -56,7 +57,7 @@ The [kerby](https://directory.apache.org/kerby/) project provides a complete Ker
 - Preauth mechanism using JWT or OTP mechanism to request TGT and Service-Tickets.
 - SASL framework support
 
-#### Ways to explore and test the Kerby realm usage:
+#### Ways to explore, test and develop the Kerby realm usage:
 
 - Kafka with SASL/GSSAPI authentication
 
