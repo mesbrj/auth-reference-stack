@@ -58,7 +58,7 @@ The Ory ecosystem (with [Polis](https://www.ory.sh/polis)) is unaware of anythin
 
 Kerberos is extremely used in Enterprise environments and products like: **Kafka**, **PostgreSQL**, **mariaDB**, **Hadoop(HDFS/YARN)**, **ElasticSearch** (to name a few), has at least GSSAPI or SPNEGO support.
 
-The [kerby](https://directory.apache.org/kerby/) project provides a complete Kerberos and KDC (AS/TGS) implementation, without: LDAP, DNS, keytab for service principal authentication, TGT and service tickets grants. Only a kerberos implementation focused on modern applications and environments, *some features to focus on*:
+The [kerby](https://directory.apache.org/kerby/) project provides a complete Kerberos and KDC (AS/TGS) implementation, without: LDAP / DNS / keytab for: service principal authentication, TGT and service-tickets grants. Only a kerberos implementation focused on modern applications and environments, *some features to focus on*:
 - KDC with: in-memory or Mavibot(MVCC BTree) or JSON backends to store data (principals and keys).
 - Preauth mechanism using JWT or OTP mechanism to request TGT and Service-Tickets.
 - SASL framework support
