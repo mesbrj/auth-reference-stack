@@ -1,6 +1,4 @@
-# Authentication and Authorization Stack
-
-A modern, production-ready authentication and authorization reference architecture using the Ory ecosystem.
+# Authentication and Authorization Stack using the Ory ecosystem.
 
 ## **OAuth 2.0 & OpenID Connect**
 **Ory [Hydra](https://www.ory.sh/hydra)** - OAuth 2.0 and OpenID Connect provider for token-based authentication
@@ -11,15 +9,6 @@ A modern, production-ready authentication and authorization reference architectu
 - **Client Management** - Dynamic client registration and management
 - **Consent Management** - Granular scope and audience control
 
-## **Authentication & Identity**
-**Ory [Kratos](https://www.ory.sh/kratos)** - Identity and user management with self-service flows
-- **Self-Service Flows** - Registration, login, logout, account recovery
-- **Multi-Factor Authentication** - TOTP, WebAuthn (FIDO2), SMS, Email
-- **Social Logins** - Google, GitHub, Facebook, Microsoft, and more
-- **Password Security** - Breach detection, complexity rules, secure hashing
-- **Email Verification** - Account activation and email confirmation
-- **Account Recovery** - Password reset and account unlock flows
-
 ## **Authorization & Permissions**
 **Ory [Keto](https://www.ory.sh/keto)** - Fine-grained authorization server with relationship-based access control
 - **Fine-Grained Access Control** - Resource-level permission management
@@ -29,15 +18,26 @@ A modern, production-ready authentication and authorization reference architectu
 - **Real-Time Evaluation** - High-performance permission checking
 - **Audit Trail** - Complete authorization decision logging
 
-## Enterprise Kerberos Authentication integration with [**kerby**](https://directory.apache.org/kerby/)
+## **Access Proxy & Gatekeeper**
+**Ory [Oathkeeper](https://www.ory.sh/oathkeeper)** - Identity and access proxy for enforcing authentication and authorization
+- **Identity & Access Proxy (IAP)** - Act as a reverse proxy or interface with API gateways. Authenticate, authorize and mutate any incoming network traffic
+- **Zero Trust** - *BeyondCorp-style* model for secure access
+- **Pluggable Authenticators** - Support for various authentication methods
 
-The Ory ecosystem (with [Polis](https://www.ory.sh/polis)) is unaware of anything beyond [SAML](https://en.wikipedia.org/wiki/Security_Assertion_Markup_Language).
+## **Authentication & Identity**
+**Ory [Kratos](https://www.ory.sh/kratos)** - Identity and user management with self-service flows
+- **Self-Service Flows** - Registration, login, logout, account recovery
+- **Multi-Factor Authentication** - TOTP, WebAuthn (FIDO2), SMS, Email
+- **Social Logins** - Google, GitHub, Facebook, Microsoft, and more
+- **Password Security** - Breach detection, complexity rules, secure hashing
+- **Email Verification** - Account activation and email confirmation
+- **Account Recovery** - Password reset and account unlock flows
 
-[SASL](https://en.wikipedia.org/wiki/Simple_Authentication_and_Security_Layer), [GSSAPI](https://en.wikipedia.org/wiki/GSSAPI), [SPNEGO](https://en.wikipedia.org/wiki/SPNEGO) are completely alien technologies.
-
-Kerberos is extremely used in Enterprise environments and products like: **Kafka**, **PostgreSQL**, **MariaDB**, **MongoDB**, **Hadoop(HDFS/YARN)**, **ElasticSearch** (to name a few) has Kerberos support.
-
-The project [book-looker-realm](https://github.com/mesbrj/book-looker-realm) (trying) integrates Kerberos authentication with Ory's ecosystem.
+## **Enterprise Identity Integration**
+**Ory [Polis](https://www.ory.sh/polis)** - Enterprise single sign-on (SSO) and identity federation
+- **SAML & OpenID Connect** - Support for enterprise identity providers
+- **Directory Synchronization (SCIM)** - Provisioning/deprovisioning for identity lifecycle management
+- **Identity Provider discovery** - Seamless SSO experience across multiple IdPs
 
 ## Oauth 2.0 & OpenID Connect Resources
 
@@ -46,4 +46,3 @@ The project [book-looker-realm](https://github.com/mesbrj/book-looker-realm) (tr
 >
 - **[Security Best Practices](docs/oauth2-flows.md#security-considerations)** - OAuth 2.0 security guidelines
 - **[Token Management](docs/oauth2-flows.md#token-storage-recommendations)** - Secure token storage and handling
-
