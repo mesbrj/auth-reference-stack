@@ -1,5 +1,10 @@
 # Authentication and Authorization Stack using the Ory ecosystem.
 
+## Implementation examples
+
+- [FastAPI Web-API - OAuth2: Client Proxy / Authentication GW / Resource Server](https://github.com/mesbrj/OAuth2-Knowledge-Base/blob/main/FastAPI-Protected-API-GW/README.md)
+- [JavaScript GUI Authentication Application](https://github.com/mesbrj/OAuth2-Knowledge-Base/blob/main/JS-GUI-Auth-APP/README.md)
+
 ## **OAuth 2.0 & OpenID Connect**
 **Ory [Hydra](https://www.ory.sh/hydra)** - OAuth 2.0 and OpenID Connect provider for token-based authentication
 - **OAuth 2.0 Flows** - Authorization Code, Client Credentials, Device Flow
